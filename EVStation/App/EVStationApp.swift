@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct EVStationApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRootView()
+                .modelContainer(for: ChargingStation.self)
         }
     }
 }
