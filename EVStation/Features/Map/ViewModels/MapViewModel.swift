@@ -19,21 +19,21 @@ final class MapViewModel: ObservableObject {
         }
         return
         
-        let descriptor = FetchDescriptor<ChargingStation>()
-
-        do {
-            let results = try context.fetch(descriptor)
-
-            // Only insert mock data if empty
-            if results.isEmpty {
-                insertMockStations(into: context)
-                stations = try context.fetch(descriptor) // Fetch again after inserting
-            } else {
-                stations = results
-            }
-        } catch {
-            print("⚠️ Failed to load stations: \\(error)")
-        }
+//        let descriptor = FetchDescriptor<ChargingStation>()
+//
+//        do {
+//            let results = try context.fetch(descriptor)
+//
+//            // Only insert mock data if empty
+//            if results.isEmpty {
+//                insertMockStations(into: context)
+//                stations = try context.fetch(descriptor) // Fetch again after inserting
+//            } else {
+//                stations = results
+//            }
+//        } catch {
+//            print("⚠️ Failed to load stations: \\(error)")
+//        }
     }
     
     func applyFilters() {
