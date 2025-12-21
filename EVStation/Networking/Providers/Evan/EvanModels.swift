@@ -79,21 +79,21 @@ struct StationsData: Codable {
 struct EvanStation: Codable {
     let id: String
     let name: String
-    let uniqueName: String
+    let uniqueName: String?
     let isEnabled: Bool
     let status: String
     let latitude: Double
     let longitude: Double
-    let lastHeartbeat: String
+    let lastHeartbeat: String?
     let countryCode: String
     let currency: String
     let canStartWhenAvailable: Bool
-    let pricingParkingId: String
-    let pricingPowerId: String
-    let pricingReservationId: String
+    let pricingParkingId: String?
+    let pricingPowerId: String?
+    let pricingReservationId: String?
     let stationAddressId: String
     let stationModelId: String
-    let supportPersonId: String
+    let supportPersonId: String?
 
     let plugs: [Plug]
     let stationAddress: StationAddress
@@ -108,17 +108,17 @@ struct Plug: Codable {
     let isEnabled: Bool
     let status: String
     let currentError: String
-    let lastError: String
+    let lastError: String?
     let activeChargePercent: Double?
     
     let adapters: [PlugAdapter]
-    let plugType: PlugType
+    let plugType: EvanPlugType
     let plugTypeId: String
     let plugTypeVariant: PlugTypeVariant
     let plugTypeVariantId: String
 }
 
-struct PlugType: Codable {
+struct EvanPlugType: Codable {
     let id: String
     let type: String
     let typeHint: String?
@@ -148,12 +148,12 @@ struct PlugAdapter: Codable {
 
 struct PlugAdapterModel: Codable {
     let id: String
-    let createdAt: String
-    let updatedAt: String
+    let createdAt: String?
+    let updatedAt: String?
     let inputPlugTypeId: String
     let outputPlugTypeId: String
-    let inputPlugType: PlugType
-    let outputPlugType: PlugType
+    let inputPlugType: EvanPlugType
+    let outputPlugType: EvanPlugType
 }
 
 struct StationModel: Codable {

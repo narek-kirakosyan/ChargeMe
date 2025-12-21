@@ -15,12 +15,12 @@ final class ProviderManager {
 
     func fetchAllStations() async throws -> [ChargingStation] {
         // Ensure login before fetching
-        try await evan.login()
-        try await teamEnergy.login()
+        try? await evan.login()
+        try? await teamEnergy.login()
 
-        let evanStations = try await evan.fetchStations()
-        let teamStations = try await teamEnergy.fetchStations()
-
+        let evanStations = (try? await evan.fetchStations()) ?? []
+        let teamStations = (try? await teamEnergy.fetchStations()) ?? []
+        
         return evanStations + teamStations
     }
 }

@@ -10,5 +10,5 @@ import Foundation
 
 struct MapFilter: Equatable {
     var showAvailableOnly: Bool
-    var selectedPlugTypes: [String]
+    var selectedPlugTypes: [PlugType]
 }

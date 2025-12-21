@@ -3,6 +3,7 @@ import SwiftUI
 struct MapTabView: View {
     @EnvironmentObject var mapCoordinator: MapCoordinator
     @StateObject private var locationManager = LocationManager()
+    @State private var showOnboarding = true
 
     var body: some View {
         NavigationStack(path: $mapCoordinator.path) {
@@ -14,6 +15,9 @@ struct MapTabView: View {
                     }
                 }
         }
+        .fullScreenCover(isPresented: $showOnboarding, content: {
+            OnboardingView(showOnboarding: $showOnboarding)
+        })
         .onAppear {
             locationManager.requestLocationPermission()
         }

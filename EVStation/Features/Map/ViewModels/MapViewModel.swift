@@ -10,12 +10,16 @@ import SwiftData
 
 @MainActor
 final class MapViewModel: ObservableObject {
-    @Published var stations: [ChargingStation] = []
+    private var stations: [ChargingStation] = []
+    @Published var filteredStations: [ChargingStation] = []
+
     @Published var filters = MapFilter(showAvailableOnly: false, selectedPlugTypes: [])
 
     func loadStations(using context: ModelContext) {
         Task {
             stations = try await ProviderManager.shared.fetchAllStations()
+            filteredStations = stations
+            print(stations)
         }
         return
         
@@ -49,18 +53,18 @@ final class MapViewModel: ObservableObject {
             filtered = filtered.filter { station in
                 // Add your own logic to match plug types
                 // For now, assume station.name contains plug type for demo
-                filters.selectedPlugTypes.contains(where: { station.name.contains($0) })
+                filters.selectedPlugTypes.contains(where: { station.plugTypes.contains($0) })
             }
         }
 
-        stations = filtered
+        filteredStations = filtered
     }
 
     private func insertMockStations(into context: ModelContext) {
         let mockStations = [
-            ChargingStation(provider: .evan, name: "Evin North", latitude: 40.1811, longitude: 44.5136, isAvailable: true),
-            ChargingStation(provider: .teamEnergy, name: "FastCharge Center", latitude: 40.1772, longitude: 44.5035, isAvailable: false),
-            ChargingStation(provider: .evan, name: "WattEV Malatia", latitude: 40.1589, longitude: 44.4711, isAvailable: true)
+            ChargingStation(provider: .evan, name: "Evin North", latitude: 40.1811, longitude: 44.5136, isAvailable: true, plugTypes: [.tesla]),
+            ChargingStation(provider: .teamEnergy, name: "FastCharge Center", latitude: 40.1772, longitude: 44.5035, isAvailable: false, plugTypes: [.tesla]),
+            ChargingStation(provider: .evan, name: "WattEV Malatia", latitude: 40.1589, longitude: 44.4711, isAvailable: true, plugTypes: [.tesla])
         ]
 
         for station in mockStations {

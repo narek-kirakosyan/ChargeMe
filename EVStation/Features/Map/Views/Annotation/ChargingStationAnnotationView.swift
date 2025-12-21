@@ -55,7 +55,8 @@ struct ChargingStationAnnotationView: View {
                 name: "FastCharge Yerevan",
                 latitude: 40.1772,
                 longitude: 44.5035,
-                isAvailable: true
+                isAvailable: true,
+                plugTypes: [.tesla]
             ),
             action: {}
         )

@@ -23,7 +23,7 @@ struct MapScreen: View {
 
             Map(position: $mapCameraPosition, interactionModes: .all) {
                 UserAnnotation()
-                ForEach(viewModel.stations) { station in
+                ForEach(viewModel.filteredStations) { station in
                     Annotation(station.name, coordinate: station.location) {
                         ChargingStationAnnotationView(station: station) {
                             selectedStation = station
@@ -73,7 +73,9 @@ struct MapScreen: View {
             }
 
             if showFilters {
-                FiltersBarView(filters: $viewModel.filters)
+                FiltersBarView(filters: $viewModel.filters) {
+                    viewModel.applyFilters()
+                }
                     .padding(.bottom, 20)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }

@@ -9,33 +9,32 @@ import SwiftUI
 
 struct FiltersBarView: View {
     @Binding var filters: MapFilter
-
-    let filterOptions: [FilterOption] = [
-        FilterOption(icon: "bolt.fill", title: "CCS"),
-        FilterOption(icon: "bolt.circle", title: "CHAdeMO"),
-        FilterOption(icon: "leaf.fill", title: "Type 2")
-    ]
+    var onClick: () -> Void = { }
+//    var filterOptions: [FilterOption] {
+//        PlugType.allCases.map { FilterOption(icon: $0.icon, title: $0.title) }
+//    }
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
-                ForEach(filterOptions, id: \.title) { option in
+                ForEach(PlugType.allCases) { type in
                     VStack(spacing: 6) {
                         ZStack {
                             Circle()
-                                .fill(filters.selectedPlugTypes.contains(option.title) ? Color.blue : Color.gray.opacity(0.3))
+                                .fill(filters.selectedPlugTypes.contains(type) ? Color.blue : Color.gray.opacity(0.3))
                                 .frame(width: 50, height: 50)
-                            Image(systemName: option.icon)
+                            Image(systemName: type.icon)
                                 .foregroundColor(.white)
                                 .font(.headline)
                         }
 
-                        Text(option.title)
+                        Text(type.title)
                             .font(.caption)
                             .foregroundColor(.primary)
                     }
                     .onTapGesture {
-                        toggle(option: option.title)
+                        toggle(type: type)
+                        onClick()
                     }
                 }
             }
@@ -47,11 +46,11 @@ struct FiltersBarView: View {
         .padding(.horizontal)
     }
 
-    private func toggle(option: String) {
-        if filters.selectedPlugTypes.contains(option) {
-            filters.selectedPlugTypes.removeAll { $0 == option }
+    private func toggle(type: PlugType) {
+        if filters.selectedPlugTypes.contains(type) {
+            filters.selectedPlugTypes.removeAll { $0 == type }
         } else {
-            filters.selectedPlugTypes.append(option)
+            filters.selectedPlugTypes.append(type)
         }
     }
 
@@ -62,5 +61,5 @@ struct FiltersBarView: View {
 }
 
 #Preview {
-    FiltersBarView(filters: .constant(MapFilter(showAvailableOnly: true, selectedPlugTypes: [""])))
+    FiltersBarView(filters: .constant(MapFilter(showAvailableOnly: true, selectedPlugTypes: [PlugType]())))
 }

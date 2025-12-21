@@ -17,8 +17,8 @@ struct MapFiltersSheet: View {
             Toggle("Only Available", isOn: $filters.showAvailableOnly)
 
             Section(header: Text("Plug Types")) {
-                ForEach(["CCS", "CHAdeMO", "Type 2"], id: \.self) { type in
-                    Toggle(type, isOn: Binding(
+                ForEach(PlugType.allCases, id: \.self) { type in
+                    Toggle(type.title, isOn: Binding(
                         get: { filters.selectedPlugTypes.contains(type) },
                         set: { isOn in
                             if isOn {
@@ -40,5 +40,5 @@ struct MapFiltersSheet: View {
 }
 
 #Preview {
-    MapFiltersSheet(filters: .constant(MapFilter(showAvailableOnly: true, selectedPlugTypes: [""])), onApply: {})
+    MapFiltersSheet(filters: .constant(MapFilter(showAvailableOnly: true, selectedPlugTypes: [PlugType]())), onApply: {})
 }

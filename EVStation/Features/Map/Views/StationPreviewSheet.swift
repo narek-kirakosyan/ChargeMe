@@ -56,5 +56,5 @@ struct StationPreviewSheet: View {
 }
 
 #Preview {
-    StationPreviewSheet(station: ChargingStation(id: UUID().uuidString, provider: .evan, name: "", latitude: 0, longitude: 0, isAvailable: true), onExpand: {}, onDismiss: {})
+    StationPreviewSheet(station: ChargingStation(id: UUID().uuidString, provider: .evan, name: "", latitude: 0, longitude: 0, isAvailable: true, plugTypes: [.tesla]), onExpand: {}, onDismiss: {})
 }
