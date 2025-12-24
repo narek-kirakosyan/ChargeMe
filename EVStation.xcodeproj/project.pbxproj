@@ -29,9 +29,22 @@
 		C79D726B2E43C6A600F3ACA4 /* EVStationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EVStationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C7C1E86D2EFB360E00EA0F8E /* Exceptions for "EVStation" folder in "EVStation" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C79D72502E43C6A200F3ACA4 /* EVStation */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C79D72532E43C6A200F3ACA4 /* EVStation */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C7C1E86D2EFB360E00EA0F8E /* Exceptions for "EVStation" folder in "EVStation" target */,
+			);
 			path = EVStation;
 			sourceTree = "<group>";
 		};
@@ -399,6 +412,7 @@
 				DEVELOPMENT_TEAM = P6WJGARF2V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EVStation/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to provide relevant information while you are using the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -430,6 +444,7 @@
 				DEVELOPMENT_TEAM = P6WJGARF2V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EVStation/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to provide relevant information while you are using the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

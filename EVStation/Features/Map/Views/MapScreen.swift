@@ -20,73 +20,22 @@ struct MapScreen: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-
-            Map(position: $mapCameraPosition, interactionModes: .all) {
-                UserAnnotation()
-                ForEach(viewModel.filteredStations) { station in
-                    Annotation(station.name, coordinate: station.location) {
-                        ChargingStationAnnotationView(station: station) {
-                            selectedStation = station
-                            withAnimation {
-                                showFilters = false
-                            }
-                        }
-                    }
-                }
-                UserAnnotation()
-            }
-            
-            // Floating buttons
-            VStack(spacing: 16) {
-                    CircleButton(icon: "slider.horizontal.3") {
-//                        let dummy = ChargingStation(name: "Test", latitude: 40.1772, longitude: 44.5035, isAvailable: true)
-//                        coordinator.goToStationDetail(dummy)
-                        showFiltersSheet = true
-                    }
-                CircleButton(icon: "location.fill") {
-                    withAnimation {
-                        mapCameraPosition = .region(MKCoordinateRegion(
-                            center: CLLocationCoordinate2D(latitude: 40.1772, longitude: 44.5035),  // or user location if available
-                            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-                        ))
-                    }
-                }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-
+            map
+            floatingButtons
             if let station = selectedStation {
-                StationPreviewSheet(
-                    station: station,
-                    onExpand: {
-                        coordinator.goToStationDetail(station)
-//                        showStationDetail = true
-                    },
-                    onDismiss: {
-                        selectedStation = nil
-                        withAnimation {
-                            showFilters = true
-                        }
-                    }
-                )
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                stationPreviewSheet(station: station)
             }
-
             if showFilters {
-                FiltersBarView(filters: $viewModel.filters) {
-                    viewModel.applyFilters()
-                }
-                    .padding(.bottom, 20)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                filters
             }
         }
-        .onAppear {
+        .onLoad {
             viewModel.loadStations(using: modelContext)
         }
 
         // Filters full sheet
         .sheet(isPresented: $showFiltersSheet) {
-            MapFiltersSheet(
+            MapFiltersScreen(
                 filters: $viewModel.filters,
                 onApply: {
                     viewModel.applyFilters()
@@ -101,6 +50,65 @@ struct MapScreen: View {
                 StationDetailView(station: station)
             }
         }
+    }
+    
+    private var map: some View {
+        Map(position: $mapCameraPosition, interactionModes: .all) {
+            UserAnnotation()
+            ForEach(viewModel.filteredStations) { station in
+                Annotation(station.name, coordinate: station.location) {
+                    ChargingStationAnnotationView(station: station) {
+                        selectedStation = station
+                        withAnimation {
+                            showFilters = false
+                        }
+                    }
+                }
+            }
+            UserAnnotation()
+        }
+    }
+    
+    private var floatingButtons: some View {
+        VStack(spacing: 16) {
+                CircleButton(icon: "slider.horizontal.3") {
+                    showFiltersSheet = true
+                }
+            CircleButton(icon: "location.fill") {
+                withAnimation {
+                    mapCameraPosition = .region(MKCoordinateRegion(
+                        center: CLLocationCoordinate2D(latitude: 40.1772, longitude: 44.5035),  // or user location if available
+                        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                    ))
+                }
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+    }
+    
+    private func stationPreviewSheet(station: ChargingStation) -> some View {
+        StationPreviewSheet(
+            station: station,
+            onExpand: {
+                coordinator.goToStationDetail(station)
+            },
+            onDismiss: {
+                selectedStation = nil
+                withAnimation {
+                    showFilters = true
+                }
+            }
+        )
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+    
+    private var filters: some View {
+        FiltersBarView(filters: $viewModel.filters) {
+            viewModel.applyFilters()
+        }
+            .padding(.bottom, 20)
+            .transition(.move(edge: .bottom).combined(with: .opacity))
     }
 }
 

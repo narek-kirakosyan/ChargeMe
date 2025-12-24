@@ -1,5 +1,5 @@
 //
-//  MapFiltersSheet.swift
+//  MapFiltersScreen.swift
 //  EVStation
 //
 //  Created by Narek Kirakosyan on 07.08.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MapFiltersSheet: View {
+struct MapFiltersScreen: View {
     @Binding var filters: MapFilter
     
     var onApply: () -> Void
@@ -40,5 +40,5 @@ struct MapFiltersSheet: View {
 }
 
 #Preview {
-    MapFiltersSheet(filters: .constant(MapFilter(showAvailableOnly: true, selectedPlugTypes: [PlugType]())), onApply: {})
+    MapFiltersScreen(filters: .constant(MapFilter(showAvailableOnly: true, selectedPlugTypes: [PlugType]())), onApply: {})
 }

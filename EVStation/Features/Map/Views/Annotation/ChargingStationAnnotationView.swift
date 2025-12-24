@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ChargingStationAnnotationView: View {
     let station: ChargingStation
     let action: () -> Void

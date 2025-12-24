@@ -14,6 +14,7 @@ struct EVStationApp: App {
         WindowGroup {
             AppRootView()
                 .modelContainer(for: ChargingStation.self)
+                .preferredColorScheme(.dark)
         }
     }
 }

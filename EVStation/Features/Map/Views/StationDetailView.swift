@@ -8,35 +8,45 @@ struct StationDetailView: View {
                 VStack(alignment: .leading) {
                     Image(.stationDetails)
                         .resizable()
+                        .frame(height: 280)
                         .scaledToFit()
                     VStack(alignment: .leading,spacing: 12) {
-                        Text(station.provider.rawValue)
-                            .font(.largeTitle)
-                            .bold()
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        
-                        Text("Address:")
-                            .font(.title)
+                        HStack {
+                            Text(station.provider.rawValue + " Station")
+                                .font(.title)
+                                .bold()
+                            Spacer()
+                            icon
+                        }
+
                         Text(station.name)
                             .font(.body)
                             .foregroundStyle(.gray)
-                        if station.isAvailable {
-                            Text("Available")
-                                .font(.title)
-                                .foregroundStyle(.dsGreen)
-                        } else {
-                            Text("Not Available:")
-                                .font(.title)
-                                .foregroundStyle(.dsRed)
-                        }
                         plugs
-
+                        buttons
                     }
                     .padding(.horizontal, 12)
                     Spacer()
                 }
-                .ignoresSafeArea(.all, edges: .top)
             .navigationTitle("Station Details")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private var icon: some View {
+        ZStack {
+            Circle()
+                .fill(statusColor(for: station))
+                .frame(width: 40, height: 40)
+                .shadow(radius: 3)
+
+            Image(systemName: "bolt.fill")
+                .foregroundColor(.white)
+                .font(.system(size: 20, weight: .bold))
+        }
+    }
+    
+    private func statusColor(for station: ChargingStation) -> Color {
+        station.isAvailable ? .green : .red
     }
     
     private var plugs: some View {
@@ -60,6 +70,21 @@ struct StationDetailView: View {
         }
     }
     
+    private var buttons: some View {
+        HStack {
+            Button(action: {  }) {
+                Text("Directions")
+            }
+            .buttonStyle(.primary)
+            Spacer()
+            Button(action: {  }) {
+                Text("Start Charging")
+            }
+            .buttonStyle(.primary)
+        }
+        .padding()
+    }
+    
     private var groupedPlugs: [(type: PlugType, count: Int)] {
         Dictionary(grouping: station.plugTypes, by: { $0 })
             .map { (type: $0.key, count: $0.value.count) }
@@ -68,5 +93,7 @@ struct StationDetailView: View {
 }
 
 #Preview {
-    StationDetailView(station: ChargingStation(provider: .evan, name: "Station", latitude: 1111, longitude: 1111, isAvailable: true, plugTypes: [.tesla, .ccs1, .ccs2]))
+    NavigationView {
+        StationDetailView(station: ChargingStation(provider: .evan, name: "Alek Manukyan", latitude: 1111, longitude: 1111, isAvailable: true, plugTypes: [.tesla, .ccs1, .ccs2]))
+    }
 }

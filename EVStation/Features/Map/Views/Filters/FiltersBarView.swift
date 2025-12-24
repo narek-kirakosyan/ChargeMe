@@ -10,9 +10,6 @@ import SwiftUI
 struct FiltersBarView: View {
     @Binding var filters: MapFilter
     var onClick: () -> Void = { }
-//    var filterOptions: [FilterOption] {
-//        PlugType.allCases.map { FilterOption(icon: $0.icon, title: $0.title) }
-//    }
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {

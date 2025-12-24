@@ -1,2 +1,6 @@
 import SwiftUI
-struct FavoritesTabView: View { var body: some View { Text("Favorites") } }
+struct FavoritesTabView: View {
+    var body: some View {
+        FavoritesScreen()
+    }
+}
