@@ -15,24 +15,21 @@ struct FavoritesScreen: View {
                 name: "FastCharge Yerevan",
                 latitude: 40.1772,
                 longitude: 44.5035,
-                isAvailable: true,
-                plugTypes: [.tesla]
+                plugs: [Plug]()
             ))
             FavoritesCell(station: ChargingStation(
                 provider: .evan,
                 name: "FastCharge Yerevan",
                 latitude: 40.1772,
                 longitude: 44.5035,
-                isAvailable: true,
-                plugTypes: [.tesla]
+                plugs: [Plug]()
             ))
             FavoritesCell(station: ChargingStation(
                 provider: .evan,
                 name: "FastCharge Yerevan",
                 latitude: 40.1772,
                 longitude: 44.5035,
-                isAvailable: true,
-                plugTypes: [.tesla]
+                plugs: [Plug]()
             ))
             Spacer()
         }

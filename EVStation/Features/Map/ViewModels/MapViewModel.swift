@@ -45,7 +45,9 @@ final class MapViewModel: ObservableObject {
 
         // Filter by availability
         if filters.showAvailableOnly {
-            filtered = filtered.filter { $0.isAvailable }
+            filtered = filtered.filter {
+                $0.plugs.contains(where: { $0.isAvailable })
+            }
         }
 
         // Filter by selected plug types
@@ -53,7 +55,8 @@ final class MapViewModel: ObservableObject {
             filtered = filtered.filter { station in
                 // Add your own logic to match plug types
                 // For now, assume station.name contains plug type for demo
-                filters.selectedPlugTypes.contains(where: { station.plugTypes.contains($0) })
+                let plugTypes = station.plugs.map { $0.plugType }
+                return filters.selectedPlugTypes.contains(where: { plugTypes.contains($0) })
             }
         }
 
@@ -62,9 +65,9 @@ final class MapViewModel: ObservableObject {
 
     private func insertMockStations(into context: ModelContext) {
         let mockStations = [
-            ChargingStation(provider: .evan, name: "Evin North", latitude: 40.1811, longitude: 44.5136, isAvailable: true, plugTypes: [.tesla]),
-            ChargingStation(provider: .teamEnergy, name: "FastCharge Center", latitude: 40.1772, longitude: 44.5035, isAvailable: false, plugTypes: [.tesla]),
-            ChargingStation(provider: .evan, name: "WattEV Malatia", latitude: 40.1589, longitude: 44.4711, isAvailable: true, plugTypes: [.tesla])
+            ChargingStation(provider: .evan, name: "Evin North", latitude: 40.1811, longitude: 44.5136, plugs: []),
+            ChargingStation(provider: .teamEnergy, name: "FastCharge Center", latitude: 40.1772, longitude: 44.5035, plugs: []),
+            ChargingStation(provider: .evan, name: "WattEV Malatia", latitude: 40.1589, longitude: 44.4711, plugs: [])
         ]
 
         for station in mockStations {

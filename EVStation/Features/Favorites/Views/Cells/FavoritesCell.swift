@@ -75,7 +75,7 @@ struct FavoritesCell: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(station.provider.rawValue)
             Text(station.name)
-            Text(station.plugTypes.map { $0.rawValue }.joined(separator: ","))
+            Text(station.plugs.map { $0.plugType.rawValue }.joined(separator: ","))
         }
     }
     
@@ -136,7 +136,6 @@ struct FavoritesCell: View {
         name: "FastCharge Yerevan",
         latitude: 40.1772,
         longitude: 44.5035,
-        isAvailable: true,
-        plugTypes: [.tesla]
+        plugs: []
     ))
 }

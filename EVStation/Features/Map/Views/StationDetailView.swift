@@ -46,7 +46,8 @@ struct StationDetailView: View {
     }
     
     private func statusColor(for station: ChargingStation) -> Color {
-        station.isAvailable ? .green : .red
+        .red
+//        station.plugs.map { $0.isAvailable } ? .green : .red
     }
     
     private var plugs: some View {
@@ -86,7 +87,7 @@ struct StationDetailView: View {
     }
     
     private var groupedPlugs: [(type: PlugType, count: Int)] {
-        Dictionary(grouping: station.plugTypes, by: { $0 })
+        Dictionary(grouping: station.plugs, by: { $0.plugType })
             .map { (type: $0.key, count: $0.value.count) }
             .sorted { $0.type.title < $1.type.title }
     }
@@ -94,6 +95,6 @@ struct StationDetailView: View {
 
 #Preview {
     NavigationView {
-        StationDetailView(station: ChargingStation(provider: .evan, name: "Alek Manukyan", latitude: 1111, longitude: 1111, isAvailable: true, plugTypes: [.tesla, .ccs1, .ccs2]))
+        StationDetailView(station: ChargingStation(provider: .evan, name: "Alek Manukyan", latitude: 1111, longitude: 1111, plugs: []))
     }
 }

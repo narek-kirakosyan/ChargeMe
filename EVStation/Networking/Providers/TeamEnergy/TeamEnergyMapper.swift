@@ -15,24 +15,24 @@ extension TeamEnergyStationDTO {
             name: displayName,
             latitude: latitude,
             longitude: longitude,
-            isAvailable: available,
-            plugTypes: [.tesla]
+            plugs: []
         )
     }
 }
 
 extension TeamEnergyStationData {
     func toDomain() -> ChargingStation {
-        let plugTypesMatrix = chargePointInfos.map { $0.connectors.map { $0.connectorType.components(separatedBy: " / ") } }.flatMap { $0 }
+        let connectors: [Connector] = chargePointInfos.map { $0.connectors }.flatMap { $0 }
+        let plugTypesMatrix = connectors.map { $0.connectorType.components(separatedBy: " / ") }
         let plugTypes = plugTypesMatrix.flatMap { $0 }.compactMap { PlugType(rawValue: $0.lowercased()) }
+        let plugs = connectors.map { Plug(id: $0.connectorId, plugType: plugTypes.first ?? .tesla, isAvailable: $0.status == "1") }
         return ChargingStation(
             id: UUID().uuidString,
             provider: .teamEnergy,
             name: name,
             latitude: latitude,
             longitude: longitude,
-            isAvailable: true,
-            plugTypes: plugTypes
+            plugs: plugs
         )
     }
 }

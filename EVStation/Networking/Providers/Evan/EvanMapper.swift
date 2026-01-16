@@ -11,15 +11,9 @@ extension EvanStation {
     func toDomain() -> ChargingStation {
         let plugAdapters = plugs.compactMap { $0.adapters.compactMap { $0.plugAdapterModel.outputPlugType.type.lowercased() }}.flatMap { $0 }
         
-        let plugTypes = plugs.compactMap { PlugType(rawValue: $0.plugType.type.lowercased()) }
-        var isAvailable = false
-
-        for plug in plugs {
-            if plug.status.lowercased() == "available" {
-                isAvailable = true
-                break
-            }
-        }
+        let plugs: [Plug] = plugs.compactMap { Plug(id: $0.id,
+                                                    plugType: PlugType(rawValue: $0.plugType.type.lowercased()) ?? .none,
+                                                    isAvailable: $0.status.lowercased() == "available") }
         
         return ChargingStation(
             id: id,
@@ -27,8 +21,7 @@ extension EvanStation {
             name: name,
             latitude: latitude,
             longitude: longitude,
-            isAvailable: isAvailable,
-            plugTypes: plugTypes
+            plugs: plugs
         )
     }
 }

@@ -14,35 +14,21 @@ struct ChargingStationAnnotationView: View {
     var body: some View {
         Button(action: action) {
             VStack(spacing: 4) {
-                ZStack {
-                    Circle()
-                        .fill(statusColor(for: station))
-                        .frame(width: 40, height: 40)
-                        .shadow(radius: 3)
-
-                    Image(systemName: "bolt.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size: 20, weight: .bold))
-                }
-
-                Text(shortName(for: station.name))
-                    .font(.caption2)
-                    .bold()
-                    .padding(4)
-                    .background(Color.white.opacity(0.85))
-                    .cornerRadius(6)
+                icon
+                    .frame(width: 32, height: 32)
             }
         }
         .buttonStyle(.plain)
     }
-
-    private func statusColor(for station: ChargingStation) -> Color {
-        station.isAvailable ? .green : .red
-    }
-
-    private func shortName(for fullName: String) -> String {
-        let components = fullName.split(separator: " ")
-        return components.first.map { String($0.prefix(6)) } ?? fullName
+    
+    private var icon: Image {
+        let availables = station.plugs.map { $0.isAvailable }
+        if availables.allSatisfy({ $0 == false }) {
+            return Image(.mapRed)
+        } else if availables.allSatisfy({ $0 == true }) {
+            return Image(.mapGreen)
+        }
+        return Image(.mapYellow)
     }
 }
 
@@ -53,8 +39,10 @@ struct ChargingStationAnnotationView: View {
                 name: "FastCharge Yerevan",
                 latitude: 40.1772,
                 longitude: 44.5035,
-                isAvailable: true,
-                plugTypes: [.tesla]
+                plugs: [Plug(id: "", plugType: .ccs1, isAvailable: false),
+                        Plug(id: "", plugType: .ccs1, isAvailable: true),
+                        Plug(id: "", plugType: .ccs1, isAvailable: false),
+                        Plug(id: "", plugType: .ccs1, isAvailable: false)]
             ),
             action: {}
         )

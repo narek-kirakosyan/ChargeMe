@@ -8,6 +8,7 @@ struct AppRootView: View {
             MapTabView()
                 .tabItem { Label("Map", systemImage: "map") }
                 .environmentObject(appCoordinator.map)
+                .font(.system(size: 12, weight: .medium))
 
             TripsTabView()
                 .tabItem { Label("Trip", systemImage: "bolt.car") }
@@ -21,5 +22,6 @@ struct AppRootView: View {
                 .tabItem { Label("Profile", systemImage: "person") }
                 .environmentObject(appCoordinator.profile)
         }
+        .tint(.softGreen)
     }
 }

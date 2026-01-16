@@ -95,12 +95,12 @@ struct EvanStation: Codable {
     let stationModelId: String
     let supportPersonId: String?
 
-    let plugs: [Plug]
+    let plugs: [EvanPlug]
     let stationAddress: StationAddress
     let stationModel: StationModel
 }
 
-struct Plug: Codable {
+struct EvanPlug: Codable {
     let id: String
     let stationId: String
     let stationModelId: String
